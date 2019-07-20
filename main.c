@@ -6,7 +6,7 @@
 /*   By: nahaddac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:33:08 by nahaddac          #+#    #+#             */
-/*   Updated: 2019/07/20 19:32:30 by nahaddac         ###   ########.fr       */
+/*   Updated: 2019/07/20 23:13:44 by hibenfet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #define BUF_SIZE 32000
 
@@ -22,7 +23,7 @@ void	ft_putchar(char c)
 	write (1, &c, 1);
 }
 
-int	ft_strlen(char *str)
+int		ft_strlen(char *str)
 {
 	int i;
 
@@ -45,26 +46,42 @@ void	ft_putstr(char *str)
 		i++;
 	}
 }
-int ft_read(int size_arg, char *av)
+
+char	*ft_strcat(char *dest, char *src)
+{
+	int i;
+	int c;
+
+	i = 0;
+	c = ft_strlen(dest);
+	while (src[i])
+	{
+		dest[c + i] = src[i];
+		i++;
+	}
+	dest[c + 1] = '\0';
+	return (dest);
+}
+
+int		ft_read(int len, char *cont)
 {
 	int fd;
-	int ret;
 	char buf[BUF_SIZE + 1];
-	char *const;
+	//char *cont;
 
 	fd = open("dict", O_RDONLY);
 	if (fd == -1)
 		ft_putstr("open() failed\n");
-	while ((len = read(fd, buf, BUF_SIZE)) =! '\0')
+	while ((len = read(fd, buf, BUF_SIZE)) != '\0')
 	{
 		;
 	}
 
-	const = malloc(len * sizeof(char));
+	cont = malloc(len * sizeof(char));
 	len = 0;
 	while ((len = read(fd, buf, BUF_SIZE)) != '\0')
 	{
-		ft_strcat(const, buf);
+		ft_strcat(cont, buf);
 	}
 
 	ft_putstr(buf);
@@ -79,9 +96,6 @@ int main(int argc, char **argv)
 {
 	int i;
 	int j;
-	int fd;
-	int ret;
-
 
 	j = 0;
 	i = 1;
